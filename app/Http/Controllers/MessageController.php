@@ -8,15 +8,25 @@ use DB;
 
 class MessageController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $userId =  auth()->id();
+        $contactId = $request->contact_id;
         return Message::select(
             'id',
             DB::raw("IF(sender_id = $userId, TRUE, FALSE) as written_by_my"),
             'created_at',
             'message'
-        )->get();
+        )->where(function($query) use ($userId, $contactId){
+            $query->where('sender_id', $userId)->where('recipent_id', $contactId);
+        })->orWhere(function($query) use ($userId, $contactId){
+            $query->where('sender_id', $contactId)->where('recipent_id', $userId);
+        })->get();
+        
+        
+        
+        
+        
     }
 
     public function store(Request $request)
