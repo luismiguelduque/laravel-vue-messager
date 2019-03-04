@@ -14,7 +14,7 @@ class MessageController extends Controller
         $contactId = $request->contact_id;
         return Message::select(
             'id',
-            DB::raw("IF(sender_id = $userId, TRUE, FALSE) as written_by_my"),
+            DB::raw("IF(sender_id = $userId, TRUE, FALSE) as written_by_me"),
             'created_at',
             'message'
         )->where(function($query) use ($userId, $contactId){
@@ -22,11 +22,6 @@ class MessageController extends Controller
         })->orWhere(function($query) use ($userId, $contactId){
             $query->where('sender_id', $contactId)->where('recipent_id', $userId);
         })->get();
-        
-        
-        
-        
-        
     }
 
     public function store(Request $request)
@@ -38,6 +33,7 @@ class MessageController extends Controller
         $saved = $message->save();
         $response = [];
         $response['success'] = $saved;
+        $response['message'] = $message;
         return $response;
     }
 }

@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<messinger-component> </messinger-component>
+<messinger-component :user="{{ auth()->user() }}"> </messinger-component>
 @endsection

@@ -17,5 +17,7 @@ class ConversationController extends Controller
             'last_message',
             'last_message_time'
         ])->where('user_id', auth()->id())->get();
+        //contact_name
+        //contact_image
     }
 }

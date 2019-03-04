@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     protected $casts = [
-        'written_by_my' => 'boolean'
+        'written_by_me' => 'boolean'
     ];
 }

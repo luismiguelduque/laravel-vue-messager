@@ -7,10 +7,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'live chat') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -24,10 +24,10 @@
         <b-navbar toggleable="md" type="dark" variant="primary">
             <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-            <b-navbar-brand href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</b-navbar-brand>
+            <b-navbar-brand href="{{ url('/home') }}">{{ config('app.name', 'Laravel') }}</b-navbar-brand>
 
             <b-collapse is-nav id="nav_collapse">
-               
+
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
                     @guest
@@ -37,20 +37,19 @@
                         @endif
                     @else
                         <b-nav-item-dropdown right>
-                            <!-- Using button-content slot -->
                             <template slot="button-content">
                                 <em>{{ Auth::user()->name }}</em>
                             </template>
-                            <b-dropdown-item href="#">Perfil</b-dropdown-item>
+                            <b-dropdown-item href="/profile">Perfil</b-dropdown-item>
                             <b-dropdown-item href="#" @click="logout">Cerrar session</b-dropdown-item>
                         </b-nav-item-dropdown>
                     @endguest
-                    
+
                 </b-navbar-nav>
 
             </b-collapse>
         </b-navbar>
-        
+
         <main class="py-4" >
             @yield('content')
         </main>
