@@ -20,20 +20,15 @@
 <script>
     export default{
         props: {
-            variant: String,
             conversation: Object,
-        },
-        data(){
-            return {
-
-            };
-        },
-        mounted(){
-
+            selected: Boolean
         },
         computed: {
             lastTime(){
                 return moment(this.conversation.last_message_time, "YYYY-MM-DD hh:mm:ss").locale('es').fromNow();
+            },
+            variant(){
+                return this.selected ? 'info' : '' ;
             }
         }
     }

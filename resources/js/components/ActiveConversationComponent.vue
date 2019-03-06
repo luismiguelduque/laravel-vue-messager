@@ -4,14 +4,13 @@
             <b-card no-body
                 footer-bg-variant="light"
                 footer-border-variant="dark"
-                title="Conversación activa"
                 class="h-100">
 
                 <b-card-body class="messages-container">
                     <message-conversation-component
                         v-for="message in messages"
                         :key="message.id"
-                        :image="message.written_by_me ? myImage : contactImage"
+                        :image="message.written_by_me ? myImage : selectedConversation.contact_image"
                         :written-by-my="message.written_by_me">
                         {{ message.message }}
                     </message-conversation-component>
@@ -35,8 +34,8 @@
             </b-card>
         </b-col>
         <b-col cols="4">
-            <b-img rounded="circle" :src="contactImage" width="62" height="62" alt="img" class="m-1" />
-            <p>{{ contactName }}</p>
+            <b-img rounded="circle" :src="selectedConversation.contact_image" width="62" height="62" alt="img" class="m-1" />
+            <p>{{ selectedConversation.contact_name }}</p>
             <hr>
             <b-form-checkbox>
                 Desactivar notificaciones
@@ -54,36 +53,14 @@
 
 <script>
     export default{
-        props:{
-            contactId: Number,
-            contactName: String,
-            contactImage: String,
-            messages: Array,
-            myImage: String
-        },
         data(){
             return {
                 newMessage: ''
             }
         },
-        mounted(){
-
-        },
         methods:{
             postMessage(){
-                const params = {
-                    recipent_id: this.contactId,
-                    message: this.newMessage
-                }
-                axios.post('/api/messages', params)
-                .then((response) =>{
-                    if(response.data.success){
-                        this.newMessage = '';
-                        const message = response.data.message;
-                        message.written_by_me = true;
-                        this.$emit('messageCreated', message);
-                    }
-                });
+                this.$store.dispatch('postMessage', this.newMessage);
             },
             scrollToBottom(){
                 const el = document.querySelector('.messages-container');
@@ -92,6 +69,17 @@
         },
         updated(){
             this.scrollToBottom()
+        },
+        computed:{
+            selectedConversation(){
+                return this.$store.state.selectedConversation;
+            },
+            messages(){
+                return this.$store.state.messages;
+            },
+            myImage(){
+                return `/users/${this.$store.state.user.image}`;
+            }
         }
     }
 </script>

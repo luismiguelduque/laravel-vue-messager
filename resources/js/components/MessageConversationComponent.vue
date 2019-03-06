@@ -17,9 +17,6 @@
             return {
                 message: "Test message"
             };
-        },
-        mounted(){
-
         }
     }
 </script>

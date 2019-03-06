@@ -27,9 +27,6 @@
 				<b-img rounded="circle" :src="image" width="62" height="62" alt="Imagen de perfil" class="m-1" />
 				<b-form-file placeholder="Seleccione una imagen" name="image"/>
 			</b-form-group>
-
-
-
 			<b-button type="submit" variant="primary">Guardar cambios</b-button>
 		</b-form>
   	</b-container>
@@ -40,11 +37,6 @@
 		props:{
 			user: Object,
 			csrfToken: String
-		},
-		data() {
-			return {
-
-			}
 		},
 		computed:{
 			image(){
